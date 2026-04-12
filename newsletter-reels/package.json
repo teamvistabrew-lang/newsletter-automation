@@ -1,0 +1,31 @@
+{
+  "name": "newsletter-reels",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "preview": "npx remotion preview src/index.ts",
+    "render": "npx remotion render src/index.ts NewsRecapReel out/reel.mp4 --codec=h264",
+    "render:teaser": "npx remotion render src/index.ts QuickTeaser out/teaser.mp4 --codec=h264",
+    "render:custom": "npx tsx src/render.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@remotion/bundler": "^4.0.448",
+    "@remotion/cli": "^4.0.448",
+    "@remotion/google-fonts": "^4.0.448",
+    "@remotion/renderer": "^4.0.448",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "remotion": "^4.0.448",
+    "typescript": "^6.0.2",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0"
+  }
+}
