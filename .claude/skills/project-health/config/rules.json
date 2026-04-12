@@ -1,0 +1,42 @@
+{
+  "thresholds": {
+    "max_file_lines": 500,
+    "max_function_lines": 50,
+    "max_dependencies": 50,
+    "min_test_coverage_percent": 60,
+    "max_todo_count": 20,
+    "max_days_since_commit": 30
+  },
+  "required_files": [
+    "README.md",
+    ".gitignore",
+    "LICENSE"
+  ],
+  "recommended_files": [
+    "CONTRIBUTING.md",
+    "CHANGELOG.md",
+    ".editorconfig",
+    "CLAUDE.md"
+  ],
+  "ci_config_patterns": [
+    ".github/workflows/*.yml",
+    ".gitlab-ci.yml",
+    "Jenkinsfile",
+    ".circleci/config.yml",
+    ".travis.yml"
+  ],
+  "test_patterns": [
+    "**/*.test.*",
+    "**/*.spec.*",
+    "**/test/**",
+    "**/tests/**",
+    "**/__tests__/**"
+  ],
+  "checks": {
+    "structure": { "weight": 20, "enabled": true },
+    "dependencies": { "weight": 20, "enabled": true },
+    "code_quality": { "weight": 25, "enabled": true },
+    "testing": { "weight": 20, "enabled": true },
+    "documentation": { "weight": 15, "enabled": true }
+  }
+}
