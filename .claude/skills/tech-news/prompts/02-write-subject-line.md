@@ -17,8 +17,15 @@ Generate a compelling subject line and pre-header text based on the selected top
 ## Subject Line Requirements
 
 - **Focus**: Exclusively tease the lead story.
-- **Length**: Strictly 7-9 words.
+- **Length**: Target **5 words** (ideal). Maximum 7 words. Shorter subject lines consistently outperform.
 - **Quality**: High-impact with specific details (company names, metrics).
+
+## Data-Backed Subject Line Rules
+
+- **Use possessive format** ("X's Y") — outperforms non-possessive on opens.
+- **Avoid numbers in subject lines** — numbers correlate with lower opens and CTR.
+- **Lead with specific brands** — company names that are less frequently used as leads drive higher open rates due to novelty. Rotate lead brands.
+- **Negative framing** hurts opens but boosts CTR. Use sparingly for high-CTR goals.
 
 ## Pre-header Text Requirements
 

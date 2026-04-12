@@ -42,6 +42,15 @@ Each selected story MUST have enough substance for:
 - **No product listicles, sponsored content, or pure opinion pieces.**
 - Do NOT repeat stories from the previous newsletter edition.
 
+## Content Mix (Data-Backed)
+
+Performance analysis shows these insights for newsletter engagement:
+
+- **Actionable content drives highest CTR** — funding stories with specific metrics (amounts, valuations, investors) outperform vague announcements. Always include hard numbers.
+- **Avoid overusing the same company as lead** — rotating lead companies avoids reader fatigue and keeps opens high.
+- **Acquisition/exit stories** tend to perform well on both opens and CTR when specific deal values are included.
+- **Pure market trend/opinion pieces underperform** — readers prefer concrete news with specific companies and numbers.
+
 ## Source Credibility
 
 - TechCrunch, Wired, Bloomberg, Reuters, Crunchbase News preferred.

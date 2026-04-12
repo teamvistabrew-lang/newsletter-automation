@@ -19,9 +19,16 @@ Based on the selected top stories, generate a compelling subject line and pre-he
 ## Subject Line Requirements
 
 - **Focus**: Must exclusively tease/highlight the lead story.
-- **Length**: Strictly 7-9 words maximum.
+- **Length**: Target **5 words** (ideal). Maximum 7 words. Shorter subject lines consistently outperform.
 - **Quality**: High-impact — generate curiosity with specific business details (company names, funding amounts).
 - Prefer concrete specificity — "$50M Series B" over "big funding round."
+
+## Data-Backed Subject Line Rules
+
+- **Use possessive format** ("X's Y") — outperforms non-possessive on opens.
+- **Avoid numbers in subject lines** — despite startup focus, numbers in subject lines correlate with lower opens. Put funding amounts in pre-header instead.
+- **Lead with the company name** in possessive format ("Poolside's $600M raise") rather than generic terms.
+- **Rotate lead brands** — overusing the same company as lead word causes fatigue and below-average performance.
 
 ## Pre-header Text Requirements
 

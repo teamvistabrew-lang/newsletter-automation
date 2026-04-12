@@ -43,6 +43,16 @@ Each selected story MUST have enough substance for:
 - **No product listicles, sponsored content, or pure opinion pieces** without news hooks.
 - Do NOT repeat stories from the previous newsletter edition.
 
+## Content Mix (Data-Backed)
+
+Performance analysis of 100+ editions shows these category-level insights:
+
+- **Creative/Art topics are #1 performers** (+1.17% open, +0.24% CTR vs average). Aim for at least 1 of 3 main stories to be creative/art focused.
+- **Code/Dev topics perform well** (+1.06% open, +0.07% CTR). Include when available.
+- **Model Releases are overrepresented** — they're the most common topic but deliver middling results. Don't default to model releases when a creative or code story is available.
+- **Health/Science topics underperform** (-2.03% opens). Avoid unless exceptionally compelling.
+- **Actionable content drives the highest CTR** — stories where readers can try something (a tool, a prompt, a feature) get 1.2-1.5% CTR vs 0.72% average. Prioritize stories with a "try this" angle.
+
 ## Source Credibility
 
 - Well-known publications, official company blogs, and peer-reviewed sources preferred.

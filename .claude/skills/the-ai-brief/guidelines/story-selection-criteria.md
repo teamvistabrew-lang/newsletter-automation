@@ -43,6 +43,16 @@ Each selected story MUST have enough substance for:
 - **No product listicles, sponsored content, or pure opinion pieces.**
 - Do NOT repeat stories from the previous edition.
 
+## Content Mix (Data-Backed)
+
+Performance analysis of 100+ editions shows these category-level insights:
+
+- **Creative/Art topics are top performers** (+1.17% open, +0.24% CTR). Include when available.
+- **Code/Dev topics perform well** (+1.06% open, +0.07% CTR). Include when available.
+- **Model Releases are overrepresented** — most common topic but middling results. Don't default to model releases when stronger categories are available.
+- **Health/Science topics underperform** (-2.03% opens). Avoid unless exceptionally compelling.
+- **Actionable content drives highest CTR** — stories where readers can try something (tool, prompt, feature) get 1.2-1.5% CTR vs 0.72% average. Prioritize "try this" angles.
+
 ## Source Credibility
 
 - Well-known publications, official company blogs, and peer-reviewed sources preferred.

@@ -41,6 +41,15 @@ Each selected story MUST have enough substance for:
 - **No product listicles, sponsored content, or pure opinion pieces.**
 - Do NOT repeat stories from the previous edition.
 
+## Content Mix (Data-Backed)
+
+Performance analysis shows these insights for tech newsletters:
+
+- **Actionable content drives highest CTR** — stories where readers can try something (tool, feature, product) significantly outperform pure news. Prioritize at least 1 story with a "try this" angle.
+- **Avoid overusing the same lead topic category** — rotating between different sectors keeps opens high by avoiding reader fatigue.
+- **Hardware/chip stories perform above average** when tied to specific products or availability.
+- **Policy/regulation underperforms** unless it has direct, immediate business impact. Avoid as lead story.
+
 ## Source Credibility
 
 - TechCrunch, The Verge, Wired, Ars Technica, Reuters, Bloomberg preferred.

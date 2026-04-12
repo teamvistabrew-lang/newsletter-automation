@@ -34,6 +34,10 @@ Create a single newsletter section for the given story using provided source mat
 
 - `#` heading level for segment header. Markdown format.
 
+## Actionable Content (Data-Backed CTR Boost)
+
+When possible, include at least one **actionable link** — a product page, a feature to try, a tool to use. Posts with actionable links achieve significantly higher CTR than pure news reporting. If the story involves a product launch or feature rollout, link to where readers can try it.
+
 ## Linking Requirements
 
 - URLs verbatim from source. Max 1 per bullet.

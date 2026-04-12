@@ -2,6 +2,8 @@
 
 Short, punchy, business-focused headlines for a tech professional audience.
 
+**Performance insight:** The best-performing subject lines are 5 words or fewer, use possessive format ("X's Y"), and avoid numbers. Target 5 words.
+
 ## Great Subject Lines
 
 - Meta's $40B reality check

@@ -31,6 +31,10 @@ Create a single newsletter section for the given story.
 
 - `#` heading for segment header. Markdown format.
 
+## Actionable Content (Data-Backed CTR Boost)
+
+When possible, include at least one **actionable link** — a tool to try, a feature to use, or a prompt to test. Posts with actionable links achieve 1.2-1.5% CTR vs 0.72% average. If the story has a "try this" angle, make it prominent in the "What matters?" bullets.
+
 ## Linking Requirements
 
 - URLs verbatim from source. Max 1 per bullet.

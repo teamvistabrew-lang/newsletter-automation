@@ -42,6 +42,13 @@ Create a single newsletter section for the given story using the provided source
 - Format in markdown.
 - Pay close attention to markdown formatting validity.
 
+## Actionable Content (Data-Backed CTR Boost)
+
+When possible, include at least one **actionable link** in the segment — a tool the reader can try, a feature they can use, or a prompt they can test. Performance data shows:
+- Posts with actionable/try-it links achieve **1.2-1.5% CTR** vs 0.72% average.
+- Google tool links, ChatGPT shared conversations, and creative tool landing pages drive the highest clicks.
+- If the story has a "try this" angle, make it prominent in the "What matters?" bullets.
+
 ## Linking Requirements
 
 Apply the hyperlinking rules from the guidelines. Key reminders:

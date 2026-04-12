@@ -2,6 +2,8 @@
 
 Short, catchy, feature the most interesting story, and enticing to AI enthusiasts.
 
+**Performance insight:** The best-performing subject lines are 5 words or fewer, use possessive format ("X's Y"), and avoid numbers. Target 5 words.
+
 ## Great Subject Lines
 
 - AI finds cancers with 99% accuracy

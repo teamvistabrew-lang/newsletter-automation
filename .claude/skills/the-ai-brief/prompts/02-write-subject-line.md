@@ -17,9 +17,18 @@ Generate a compelling subject line and pre-header text based on the selected top
 ## Subject Line Requirements
 
 - **Focus**: Exclusively tease the lead story.
-- **Length**: Strictly 7-9 words.
+- **Length**: Target **5 words** (ideal). Maximum 7 words. Shorter subject lines consistently outperform.
 - **Quality**: High-impact, generate curiosity with specific details.
 - Prefer concrete specificity over generic terms.
+
+## Data-Backed Subject Line Rules
+
+- **Use possessive format** ("X's Y") — outperforms non-possessive by +0.35% opens.
+- **Avoid numbers in subject lines** — numbers correlate with lower opens and CTR.
+- **Brand performance ranking** (best for opens): Claude, Nvidia, Samsung, Apple, ChatGPT. Lead with these when possible.
+- **Reduce OpenAI leads** — most common but below-average performance. Rotate with other brands.
+- **Avoid Gemini leads** — underperforms on opens.
+- **Negative framing** hurts opens but boosts CTR. Use sparingly.
 
 ## Pre-header Text Requirements
 

@@ -2,6 +2,8 @@
 
 These exemplify the target style and quality for a startup/VC audience. They are short, specific, business-focused, and enticing.
 
+**Performance insight:** The best-performing subject lines are 5 words or fewer, use possessive format ("X's Y"), and avoid numbers. Put funding amounts in the pre-header instead. Target 5 words.
+
 ## Great Subject Lines
 
 - Perplexity hits $100M ARR in record time

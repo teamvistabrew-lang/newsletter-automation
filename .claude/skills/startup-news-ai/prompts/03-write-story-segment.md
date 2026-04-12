@@ -40,6 +40,10 @@ Create a single newsletter section for the given story using the provided source
 - Use `#` heading level for the segment header.
 - Format in markdown.
 
+## Actionable Content (Data-Backed CTR Boost)
+
+When possible, include at least one **actionable link** — a company's product page, a Crunchbase profile, or an investor's portfolio page. Stories with specific, clickable resources drive significantly higher CTR than pure reporting. If the startup has a product readers can try, link to it.
+
 ## Linking Requirements
 
 Apply the hyperlinking rules from the guidelines:
