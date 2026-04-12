@@ -23,10 +23,6 @@ Use this template to assemble the final newsletter output. Replace placeholders 
 
 ---
 
-{{story_segment_4}}
-
----
-
 ## The Shortlist
 
 {{shortlist_section}}

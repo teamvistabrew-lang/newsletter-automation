@@ -1,0 +1,754 @@
+{
+  "name": "DataIngestion",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "TZfrHoAVDw6NCT0K",
+          "mode": "list",
+          "cachedResultName": "Helper_Crawl_URLs"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "url": "={{ $node[\"get_identity\"].json.url }}"
+          },
+          "matchingColumns": [
+            "url"
+          ],
+          "schema": [
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        4624,
+        -576
+      ],
+      "id": "60bbae78-51dd-4dc6-90c5-9204c2e7f043",
+      "name": "scrape_url",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Given content fetched from a web page, analyze this content to determine if it is relevant to our AI Startup Launch & Funding Newsletter.\\n\\nThis newsletter specifically focuses on:\\n\\nHIGH PRIORITY CONTENT:\\n- NEW AI startup launches and company announcements\\n- AI startup funding rounds (all stages: pre-seed to Series A+) with specific amounts and investors\\n- AI startup product launches and major releases\\n- AI startup acquisitions and exit events\\n- AI accelerator batch announcements (Y Combinator, Techstars, etc.)\\n- AI startup pivots and business model changes\\n- AI startup team announcements (key hires, founder changes)\\n\\nMEDIUM PRIORITY CONTENT:\\n- AI startup partnerships and strategic alliances\\n- AI startup pilot programs and customer wins\\n- AI startup geographic expansion announcements\\n- AI startup competitive developments\\n\\nEXCLUDE:\\n- General AI research without startup/commercial context\\n- Established tech companies adding AI features (unless new AI subsidiary)\\n- AI industry analysis without specific startup mentions\\n- Academic AI research papers\\n- AI policy discussions without startup implications\\n- Job postings unrelated to startup funding/growth\\n- Technical tutorials without business context\\n\\nEvaluation Criteria:\\n- Does this mention specific AI startup companies by name?\\n- Does this discuss funding amounts, investors, or valuation?\\n- Does this announce new AI products/services launching?\\n- Does this cover AI startup business developments?\\n- Is this about the BIRTH or early growth of AI companies?\\n\\nThe content should demonstrate clear connection to NEW or emerging AI companies, their funding, products, or business milestones.\n{{ $json.data.json.content }}",
+        "hasOutputParser": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        5152,
+        -576
+      ],
+      "id": "236abc81-5509-4eb5-b00f-f80651383f2d",
+      "name": "evaluate_content"
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "bucketName": "data-ingestion-startup-news",
+        "fileName": "={{ $('get_identity').item.json.uploadFileName + \".md\" }}",
+        "binaryData": false,
+        "fileContent": "={{ $('scrape_url').item.json.data.json.content }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        6384,
+        -736
+      ],
+      "id": "bcf870e1-3d33-4647-a40a-48cc68780411",
+      "name": "upload_temp_markdown",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "s3": {
+          "id": "C389bH9jh7lpoj0B",
+          "name": "S3 account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "bucketName": "data-ingestion-startup-news",
+        "fileName": "={{ $('get_identity').item.json.uploadFileName + \".html.temp\" }}",
+        "binaryData": false,
+        "fileContent": "={{ $('scrape_url').item.json.data.rawHtml }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        6384,
+        -416
+      ],
+      "id": "39089130-08a4-4f5f-9102-72a2010a9b01",
+      "name": "upload_temp_html",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "maxTries": 5,
+      "credentials": {
+        "s3": {
+          "id": "C389bH9jh7lpoj0B",
+          "name": "S3 account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6a082ec0-16b7-4d5b-832d-2609a06fae15",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "6838c8ba-c498-49f5-bb97-bee33f02dd20",
+              "name": "url",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "13967cc2-74e2-445f-b88f-f15405cd89d8",
+              "name": "authors",
+              "value": "={{ $json.creator }}",
+              "type": "string"
+            },
+            {
+              "id": "a33938bc-1743-4e67-bdaf-c4c1d5bc3ce0",
+              "name": "date",
+              "value": "={{ $json.pubDate }}",
+              "type": "string"
+            },
+            {
+              "id": "7edee0aa-3a35-41bf-b616-85246fed3436",
+              "name": "publishedTimestamp",
+              "value": "={{ $json.isoDate }}",
+              "type": "string"
+            },
+            {
+              "id": "a68bb301-94e1-414d-96f8-09f6453b45c1",
+              "name": "sourceName",
+              "value": "={{ $json.sourceName }}",
+              "type": "string"
+            },
+            {
+              "id": "00b19e33-754f-4347-a30a-bb33b3740919",
+              "name": "feedType",
+              "value": "={{ $json.feedType }}",
+              "type": "string"
+            },
+            {
+              "id": "24e1b6dc-81e2-4964-a56c-36ceccd9e1f2",
+              "name": "feedUrl",
+              "value": "={{ $json.feedUrl }}",
+              "type": "string"
+            },
+            {
+              "id": "b287462d-3fad-46a2-bc42-5aa98aa8bde3",
+              "name": "uploadFileName",
+              "value": "={{ \n  $json.isoDate.substring(0, 10) + \"/\" + \n  $json.title\n    .toLowerCase()\n    .replace(/[^a-z0-9 -]/g, '')  // remove characters outside a-z, 0-9, space, and dash\n    .trim()                      // remove any leading/trailing whitespace\n    .replace(/\\s+/g, '-')        // replace whitespace with dash\n    .replace(/-+/g, '-')         // collapse multiple dashes\n  + '.' + $json.sourceName \n}}",
+              "type": "string"
+            },
+            {
+              "id": "9107458f-7ff1-415d-a6bd-0644c6636e7b",
+              "name": "contentText",
+              "value": "={{ $json.contentText }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3440,
+        -576
+      ],
+      "id": "d9f4888a-b710-405e-b3e9-a81bddd0bb6c",
+      "name": "get_identity",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "resource": "bucket",
+        "operation": "search",
+        "bucketName": "data-ingestion-startup-news",
+        "additionalFields": {
+          "prefix": "={{ $json.uploadFileName }}"
+        }
+      },
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        3792,
+        -576
+      ],
+      "id": "0d7d78aa-b671-4078-ba5d-375785c973af",
+      "name": "search_existing_resource",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "s3": {
+          "id": "C389bH9jh7lpoj0B",
+          "name": "S3 account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "fbf2844d-f77e-4c7f-a223-42b674d3668c",
+              "leftValue": "={{ $json }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        4080,
+        -576
+      ],
+      "id": "c178ebe5-340f-4ec0-9047-d38c6d74e0c9",
+      "name": "skip_existing_resources"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "22197457-7f84-4504-a14f-a5346a80359f",
+              "leftValue": "={{ $('evaluate_content').item.json.output.is_revelant_content }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        5632,
+        -576
+      ],
+      "id": "4e283ce7-0936-4408-9709-c69e76272561",
+      "name": "ensure_revelant"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n\t\"type\": \"object\",\n\t\"properties\": {\n        \"chainOfThought\": {\n          \"type\": \"string\",\n          \"description\": \"Sequential reasoning to determine if the provided content is a valid and relevant piece of content that an AI or tech enthusiast would be interested in reading and learning about.\"\n        },\n\t\t\"is_revelant_content\": {\n\t\t\t\"type\": \"boolean\",\n            \"description\": \"Indicator if the provided content is relevant piece of content to the AI industry.\"\n\t\t}\n\t}\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        5312,
+        -192
+      ],
+      "id": "4653cdb7-1149-4385-9278-93af5031c537",
+      "name": "is_revelant_content_parser"
+    },
+    {
+      "parameters": {
+        "text": "=You are given:\n\n1. **Content Website**: The domain hosting the content (e.g., `https://www.bloomberg.com/news/…`).  \n2. **Content Title and Body**: Text or markdown content extracted from a web page.  \n3. **Links Found on Content Page**: A list of hyperlinks that appear in or around the same article or page.\n\n## Your Task\n\n- Identify any **external source links** that are most relevant to the main topic of the content. It is possible there are NOT ANY good external source links.\n- **External** means the link must be on a domain *different* from the Content Website’s domain.\n- **Relevance** means it must directly reference a primary source (e.g., a product announcement, study, press release, etc.) that underpins the main topic.\n- **Exclude** links that are:\n  - On the same domain as the Content Website\n  - Generic homepages, profile pages, or unrelated side links\n  - Not clearly connected to the main focus of the article\n  - To storefront pages like eCommerce sites, to bookstore pages, to direct product listings, or other place to order a product directly.\n  - To shopping websites like bookstores and other retail stores.\n- If one or more valid external links exist, return them in a single comma-separated string as `external_source_urls`.\n- If no external links meet these criteria, omit the `external_source_urls` field entirely.\n\n## Output Format\n\n- Return only the answer in plain text.\n- Either:\n  1. `external_source_urls: <comma-separated list of valid external links>`\n  2. Omit the field if no valid external links exist.\n\n\n## Other Details\nIt is critical that your source link is relevant to the main content and would be useful context to evaluate when writing a newsletter overview about this content targeted towards AI enthusiasts and people interested in the AI space.\n\n---\n\n### Example Scenario\n\nIf the article is focused on an AI breakthrough from OpenAI and there is an external link to an official OpenAI product announcement hosted on openai.com, include that link (since it is on a *different* domain and relevant to the main topic). If all links point to the same domain or are irrelevant, do not return any `external_source_urls`.\n\n---\nContent Website:\n{{ $('scrape_url').item.json.data.metadata.url }}\n\n\nContent Title:\n{{ $('scrape_url').item.json.data.metadata.title }}\n\nContent:\n{{ $('scrape_url').item.json.data.json.content }}\n\nLinks Found on Content Page:\n{{ $('scrape_url').item.json.data.links.map(item => item.split(\"?\")[0]).join(\"\\n\") }}\n",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "external_source_urls",
+              "description": "Optional comma-separated values list of urls that are external sources referenced on this piece of content. The url here should NOT be on the same domain as the url of the main content piece, it should be an external url meaning another website. Make sure there is NOT a trailing comma after the last value."
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "You are an expert extraction algorithm.\nOnly extract relevant information from the text.\nIf you do not know the value of an attribute asked to extract, you may omit the attribute's value."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        5920,
+        -576
+      ],
+      "id": "e235e9f7-b823-4b59-bb31-f8d16084b78a",
+      "name": "try_extract_external_sources",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ecd02ccb-0790-44ab-8bb0-246881e35a20",
+              "leftValue": "={{ $json.error }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        4912,
+        -576
+      ],
+      "id": "3b82cc6c-ddbf-4300-b327-695de914a9fe",
+      "name": "filter_scrape_errors"
+    },
+    {
+      "parameters": {
+        "content": "## Web Content",
+        "height": 3960,
+        "width": 5380,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1456,
+        -1824
+      ],
+      "typeVersion": 1,
+      "id": "00321431-eb8b-4501-bf27-611b79637da3",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "amount": 180
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4368,
+        -576
+      ],
+      "id": "553580a8-79a4-4a23-bf83-ac7cd0054091",
+      "name": "delay",
+      "webhookId": "ea003ac0-5583-4e8d-812a-c9dd73c09cf4"
+    },
+    {
+      "parameters": {
+        "model": "openai/o3-mini",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatVercelAiGateway",
+      "typeVersion": 1,
+      "position": [
+        5600,
+        -192
+      ],
+      "id": "f7e5a4b3-9b8f-42fe-93dc-43d51a73c4be",
+      "name": "Vercel AI Gateway (o3-mini)",
+      "credentials": {
+        "vercelAiGatewayApi": {
+          "id": "0JivGm7k1oIVTtQS",
+          "name": "Vercel AI Gateway account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "bucketName": "metadata-startup-news",
+        "fileName": "={{ $('get_identity').item.json.uploadFileName + \".md\" }}",
+        "binaryData": false,
+        "fileContent": "={\n  \"srcKey\": \"{{ $('get_identity').item.json.uploadFileName + '.md' }}\",\n  \"dstKey\": \"{{ $('get_identity').item.json.uploadFileName + '.md' }}\",\n  \"newContentType\": \"application/vnd.aitools.{{ $('get_identity').item.json.feedType }}+md\",\n  \"newMetadata\": {\n    \"key\": \"{{ $('get_identity').item.json.uploadFileName + '.md' }}\",\n    \"type\": \"{{ $('get_identity').item.json.feedType }}\",\n    \"title\": {{ JSON.stringify($('get_identity').item.json.title) }},\n    \"authors\": {{ JSON.stringify($('get_identity').item.json.authors ?? \"\") }},\n    \"source-name\": \"{{ $('get_identity').item.json.sourceName }}\",\n    \"external-source-urls\": {{ JSON.stringify($('try_extract_external_sources').item.json.output.external_source_urls ?? \"\") }},\n    \"image-urls\": {{ JSON.stringify($('scrape_url').item.json.data.json.main_content_image_urls.join(\",\")) }},\n    \"url\": \"{{ $('get_identity').item.json.url }}\",\n    \"timestamp\": \"{{ $('get_identity').item.json.publishedTimestamp }}\",\n    \"feed-url\": \"{{ $('get_identity').item.json.feedUrl }}\"\n  }\n}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        6624,
+        -736
+      ],
+      "id": "262dc6f7-0eeb-4c81-b38c-7d012fe35a4f",
+      "name": "upload_temp_metadata_md1",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "s3": {
+          "id": "C389bH9jh7lpoj0B",
+          "name": "S3 account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "bucketName": "metadata-startup-news",
+        "fileName": "={{ $('get_identity').item.json.uploadFileName + \".html\" }}",
+        "binaryData": false,
+        "fileContent": "={\n  \"srcKey\": \"{{ $('get_identity').item.json.uploadFileName + '.html' }}\",\n  \"dstKey\": \"{{ $('get_identity').item.json.uploadFileName + '.html' }}\",\n  \"newContentType\": \"application/vnd.aitools.{{ $('get_identity').item.json.feedType }}.raw+html\",\n  \"newMetadata\": {\n    \"key\": \"{{ $('get_identity').item.json.uploadFileName + '.md' }}\",\n    \"type\": \"{{ $('get_identity').item.json.feedType }}\",\n    \"title\": {{ JSON.stringify($('get_identity').item.json.title) }},\n    \"authors\": {{ JSON.stringify($('get_identity').item.json.authors ?? \"\") }},\n    \"source-name\": \"{{ $('get_identity').item.json.sourceName }}\",\n    \"external-source-urls\": {{ JSON.stringify($('try_extract_external_sources').item.json.output.external_source_urls ?? \"\") }},\n    \"image-urls\": {{ JSON.stringify($('scrape_url').item.json.data.json.main_content_image_urls.join(\",\")) }},\n    \"url\": \"{{ $('get_identity').item.json.url }}\",\n    \"timestamp\": \"{{ $('get_identity').item.json.publishedTimestamp }}\",\n    \"feed-url\": \"{{ $('get_identity').item.json.feedUrl }}\"\n  }\n}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        6640,
+        -416
+      ],
+      "id": "784900a6-d8f9-4167-919d-ddac80c747f5",
+      "name": "upload_temp_metadata_html1",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "s3": {
+          "id": "C389bH9jh7lpoj0B",
+          "name": "S3 account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://rss.app/feeds/v1.1/_7WzIn96mpO5OjItc.json",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1904,
+        -560
+      ],
+      "id": "d5ad63c6-53c9-49b3-a839-8e02b8aa97fb",
+      "name": "fetch_startup_news_ai_feed"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "items",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        2128,
+        -560
+      ],
+      "id": "17be08be-c3f5-4081-92ad-b5b44faa900d",
+      "name": "split_startup_news_ai_items"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "return {\n  sourceName: \"rss_startup_news\",\n  title: $input.item.json.title,\n  creator: $input.item.json.authors[0]?.name,\n  link: $input.item.json.url,\n  contentText: $input.item.json.content_text,\n  pubDate: $input.item.json.date_published,\n  isoDate: $input.item.json.date_published,\n  feedType: \"article\",\n  feedUrl: \"https://rss.app/feeds/v1.1/_7WzIn96mpO5OjItc.json\"\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2800,
+        -560
+      ],
+      "id": "8484915a-177f-4cfb-879f-5629bf9b0d5d",
+      "name": "normalize_blog_startup_news_articles"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 0 3 * * *"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        1680,
+        -560
+      ],
+      "id": "bc12ece3-105a-4329-b317-2c9424c3c885",
+      "name": "startup_news_daily_trigger"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "scrape_url": {
+      "main": [
+        [
+          {
+            "node": "filter_scrape_errors",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "evaluate_content": {
+      "main": [
+        [
+          {
+            "node": "ensure_revelant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "upload_temp_markdown": {
+      "main": [
+        [
+          {
+            "node": "upload_temp_metadata_md1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "upload_temp_html": {
+      "main": [
+        [
+          {
+            "node": "upload_temp_metadata_html1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_identity": {
+      "main": [
+        [
+          {
+            "node": "search_existing_resource",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "search_existing_resource": {
+      "main": [
+        [
+          {
+            "node": "skip_existing_resources",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "skip_existing_resources": {
+      "main": [
+        [
+          {
+            "node": "delay",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ensure_revelant": {
+      "main": [
+        [
+          {
+            "node": "try_extract_external_sources",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "is_revelant_content_parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "evaluate_content",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "try_extract_external_sources": {
+      "main": [
+        [
+          {
+            "node": "upload_temp_markdown",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "upload_temp_html",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "filter_scrape_errors": {
+      "main": [
+        [
+          {
+            "node": "evaluate_content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "delay": {
+      "main": [
+        [
+          {
+            "node": "scrape_url",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vercel AI Gateway (o3-mini)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "evaluate_content",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "try_extract_external_sources",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "fetch_startup_news_ai_feed": {
+      "main": [
+        [
+          {
+            "node": "split_startup_news_ai_items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "split_startup_news_ai_items": {
+      "main": [
+        [
+          {
+            "node": "normalize_blog_startup_news_articles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "normalize_blog_startup_news_articles": {
+      "main": [
+        [
+          {
+            "node": "get_identity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "startup_news_daily_trigger": {
+      "main": [
+        [
+          {
+            "node": "fetch_startup_news_ai_feed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "616509de-56b7-4824-8bb3-f5f24374ca13",
+  "meta": {
+    "instanceId": "af69c48c791b58e55f2057e750c304fa2362abed4aaa6d19c41bf907e1e209e5"
+  },
+  "id": "NaOV42g9ipozvvMb",
+  "tags": [
+    {
+      "createdAt": "2025-09-06T03:44:57.943Z",
+      "updatedAt": "2025-09-06T03:44:57.943Z",
+      "id": "hwk7iVvZGOkPois2",
+      "name": "AI Startup Pipeline"
+    },
+    {
+      "createdAt": "2025-08-14T01:42:07.609Z",
+      "updatedAt": "2025-08-14T01:42:07.609Z",
+      "id": "m1xPlEPxCmv1Vi1v",
+      "name": "Entrypoint"
+    }
+  ]
+}

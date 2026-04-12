@@ -6,15 +6,15 @@ Every hyperlink must be verified, relevant, and extracted verbatim from the sour
 
 ## Strategic Linking
 
-1. Link specific entities (companies, products, technologies) to their official source on first mention.
-2. Link data, statistics, claims, or direct quotes to their precise origin (press release, study, article).
-3. For announcements, link back to the company's actual announcement (blog post, tweet, research paper).
+1. Link specific companies, products, and funding rounds to their official source on first mention.
+2. Link funding amounts, valuations, and investor names to their precise origin (press release, TechCrunch article, Crunchbase).
+3. For funding announcements, link back to the company's actual press release or the breaking news article.
 
 ## Mandatory Verified Deep Links
 
 - All hyperlinks MUST point to the exact, specific page directly supporting the assertion.
 - Prioritize primary or most authoritative sources.
-- **NO linking to generic homepages** (e.g., `https://openai.com/` is NOT acceptable).
+- **NO linking to generic homepages** (e.g., `https://techcrunch.com/` is NOT acceptable).
 - If the precise URL cannot be confidently identified, DO NOT include a link.
 
 ## URL Handling
@@ -43,8 +43,8 @@ Every hyperlink must be verified, relevant, and extracted verbatim from the sour
 
 ## What TO Link
 
-- Press releases and official blog posts.
-- Specific announcement pages.
-- Tweets / X posts with full URL (twitter.com or x.com).
-- Research papers (non-PDF web versions).
-- Specific articles from credible publications.
+- Press releases and official company blogs.
+- TechCrunch, Wired, Bloomberg funding articles.
+- Crunchbase company profiles.
+- Tweets / X posts from verified founders or VCs.
+- Specific articles from credible business publications.
